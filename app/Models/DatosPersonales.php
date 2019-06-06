@@ -6,13 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $ID
+ * @property int $IDOficio
  * @property string $TipoIdentificacion
+ * @property string $TipoEntidad
  * @property string $Identificacion
  * @property string $Nombres
  * @property string $Apellidos
  * @property string $Email
  * @property string $Direccion
  * @property string $PathCurricullum
+ *
+ * @property \App\Models\Oficio $oficio
  */
 class DatosPersonales extends Model
 {
@@ -30,11 +34,18 @@ class DatosPersonales extends Model
     protected $fillable = [
         'ID',
         'TipoIdentificacion',
+        'TipoEntidad',
         'Identificacion',
+        'IDOficio',
         'Nombres',
         'Apellidos',
         'Email',
         'Direccion',
         'PathCurricullum',
     ];
+
+    public function oficio()
+    {
+        return $this->belongsTo(\App\Models\Oficio::class, 'IDOficio');
+    }
 }

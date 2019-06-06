@@ -1,5 +1,7 @@
 /vendor
 /.idea
+/public/files
 Homestead.json
 Homestead.yaml
 .env
+api_curricullum.zip

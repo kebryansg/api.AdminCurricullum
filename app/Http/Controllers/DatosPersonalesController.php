@@ -17,13 +17,13 @@ class DatosPersonalesController extends Controller
         $rows = null;
         $search = $request->input('search');
         if ($search) {
-            $rows = DatosPersonales::where(function ($query) use ($search) {
+            $rows = DatosPersonales::with('oficio')->where(function ($query) use ($search) {
                 $query->where('Identificacion', 'like', "%$search%");
                 $query->orWhere('Nombres', 'like', "%$search%");
                 $query->orWhere('Apellidos', 'like', "%$search%");
             })->paginate($request->input('limit'));
         } else {
-            $rows = DatosPersonales::paginate($request->input('limit'));
+            $rows = DatosPersonales::with('oficio')->paginate($request->input('limit'));
         }
         return response()->json($rows, 200);
     }
@@ -36,13 +36,12 @@ class DatosPersonalesController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->files);
         $data = new DatosPersonales();
         $data->fill($request->all());
 
         // File
         $sourceFile = $request->input('CV')["value"];
-        $nameFile = 'files/files/'. uniqid() . $request->input('CV')["extension"];
+        $nameFile = 'files/'. uniqid() . $request->input('CV')["extension"];
         file_put_contents($nameFile, base64_decode($sourceFile));
         $data->PathCurricullum = $nameFile;
         $data->save();

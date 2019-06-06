@@ -2,10 +2,7 @@
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
-//    return uniqid();
 });
-
-
 
 $router->group([ "prefix" => 'admin', 'middleware' => 'auth' ], function() use($router){
     $router->get('info', [ 'uses' => 'AuthController@info']);
@@ -15,4 +12,5 @@ $router->group([ "prefix" => 'admin', 'middleware' => 'auth' ], function() use($
 
 });
 
+$router->get('oficio', [ 'uses' => 'OficioController@index']);
 $router->post('datos-personales', [ 'uses' => 'DatosPersonalesController@store']);
